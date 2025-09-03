@@ -44,7 +44,7 @@ POSITION_TETRIS = POSITION_SCORE[0], 210
 POSITION_NIVEAU = POSITION_SCORE[0], 240
 
 
-#
+# les piece neccessaires au jeu
 PIECES = {
 	'O': [
 		'0000\n0110\n0110\n0000',
@@ -61,6 +61,7 @@ PIECES = {
 		'0400\n0400\n0400\n0400',
 		'0000\n4444\n0000\n0000',
 	],
+	# Problème avec la pièce J	
 	'J': [
 		'0000\n5000\n5550\n0000',
 		'0000\n0550\n0500\n0500',
@@ -112,12 +113,12 @@ class Jeu:
 			'titre': pygame.font.Font('freesansbold.ttf', 100),
 		}
 		pygame.display.set_caption('Application Tetris')
-
+    # lancement du jeu
 	def start(self):
 		self._afficherTexte('Tetris', CENTRE_FENETRE, font = 'titre')
 		self._afficherTexte('Appuyer sur une touche...', POS)
 		self._attente()
-
+	# fin du jeu
 	def stop(self):
 		self._afficherTexte('Perdu', CENTRE_FENETRE, font='titre')
 		self._attente()
@@ -131,6 +132,7 @@ class Jeu:
 		rect = rendu.get_rect()
 		rect.center = position
 		self.surface.blit(rendu, rect)
+		
 	def _getEvent(self):
 		for event in pygame.event.get():
 			if event.type == QUIT:
@@ -142,26 +144,32 @@ class Jeu:
 				if event.key == K_ESCAPE:
 					continue
 				return event.key
-				
+	# quitter le jeu			
 	def _quitter(self):
+		
 		print("Quitter")
 		pygame.quit()
 		sys.exit()
+
 	def _rendre(self):
 		pygame.display.update()
 		self.clock.tick()
+	# met en pause le jeu
 	def _attente(self):
 		print("Attente")
 		while self._getEvent() == None:
 			self._rendre()
+	# obtenir une piece aleatoire
 	def _getPiece(self):
 		return PIECES.get(random.choice(PIECES_KEYS))
+	# obtenir la couleur de la piece courante
 	def _getCurrentPieceColor(self):
 		for l in self.current[0]:
 			for c in l:
 				if c != 0:
 					return c
 		return 0
+	
 	def _calculerDonneesPieceCourante(self):
 		m=self.current[self.position[2]]
 		coords = []
