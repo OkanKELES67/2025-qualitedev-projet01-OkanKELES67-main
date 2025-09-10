@@ -26,7 +26,7 @@ from constante import *
 # Classe Tetris
 class Jeu:
 	"""
-	[Il manque la documentation de la classe]
+	c'est la classe pour un jeu (tetris)
 	"""
 	def __init__(self):
 		pygame.init()
@@ -39,16 +39,19 @@ class Jeu:
 		pygame.display.set_caption('Application Tetris')
 
 	def start(self):
+		"""lance l'app et affiche l'ecran principale"""
 		self._afficher_texte('Tetris', CENTRE_FENETRE, font = 'titre')
 		self._afficher_texte('Appuyer sur une touche...', POS)
 		self._attente()
 
 	def stop(self):
+		"""quand le joueur a perdu l'affiche et arrete le jeu"""
 		self._afficher_texte('Perdu', CENTRE_FENETRE, font='titre')
 		self._attente()
 		self._quitter()
 
-	def _afficher_texte(self, text, position, couleur=9, font='defaut'):
+	def _afficher_texte(self, text :str, position : int, couleur=9 , font='defaut'):
+		"""affiche le texte donnée """
 #		print("Afficher Texte")
 		font = self.fonts.get(font, self.fonts['defaut'])
 		couleur=COULEURS.get(couleur, COULEURS[9])
@@ -57,6 +60,7 @@ class Jeu:
 		rect.center = position
 		self.surface.blit(rendu, rect)
 	def _get_event(self):
+		"""recupere la touche choisie par l'utilisateur dans le menu"""
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				self._quitter()
@@ -69,6 +73,7 @@ class Jeu:
 				return event.key
 				
 	def _quitter(self):
+		"""ferme l'application"""
 		print("Quitter")
 		pygame.quit()
 		sys.exit()
@@ -78,11 +83,13 @@ class Jeu:
 		self.clock.tick()
 		
 	def _attente(self):
+		"""attend l'action de l'utilisateur"""
 		print("Attente")
 		while self._get_event() == None:
 			self._rendre()
 			
 	def _get_piece(self):
+		"""recupere une piece aleatoire apres que le joueur a poser ca piece"""
 		return PIECES.get(random.choice(PIECES_KEYS))
 	
 	def _get_current_piece_color(self):
@@ -92,6 +99,7 @@ class Jeu:
 					return c
 		return 0
 	def _calculer_donnees_piece_courante(self):
+		"""recupere les coordonnée de la piece courante"""
 		m=self.current[self.position[2]]
 		coords = []
 		for i, l in enumerate(m):
@@ -100,6 +108,7 @@ class Jeu:
 					coords.append([i+self.position[0], j+self.position[1]])
 		self.coordonnees = coords
 	def _est_valide(self, x=0, y=0, r=0):
+		"""verifie que la piece reste a une position valide"""
 		max_x, max_y = DIM_PLATEAU
 		if r == 0:
 			coordonnees = self.coordonnees
@@ -129,6 +138,7 @@ class Jeu:
 		return True
 	
 	def _poser_piece(self):
+		"""pose la piece"""
 		print("La pièce est posée")
 		if self.position[1] <= 0:
 			self.perdu = True
