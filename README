@@ -1,0 +1,1 @@
+La commande "yapf -ir tetris.py" a permis de corriger l'indentation sur le fichier tetris.py ,il a aussi mis a la ligne les ligne trop longue et a separé les methode et fonction avec un saut de ligne
