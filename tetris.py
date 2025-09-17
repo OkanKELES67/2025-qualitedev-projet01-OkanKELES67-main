@@ -45,6 +45,7 @@ POSITION_LIGNES = POSITION_SCORE[0], 180
 POSITION_TETRIS = POSITION_SCORE[0], 210
 POSITION_NIVEAU = POSITION_SCORE[0], 240
 
+
 #
 PIECES = {
     'O': [
@@ -82,6 +83,7 @@ PIECES = {
     ]
 }
 
+
 for name, rotations in PIECES.items():
     PIECES[name] = [[[int(i) for i in p] for p in r.splitlines()]
                     for r in rotations]
@@ -107,6 +109,7 @@ class Jeu:
     """
 	[Il manque la documentation de la classe]
 	"""
+
 
     def __init__(self):
         pygame.init()
@@ -195,6 +198,7 @@ class Jeu:
                         coords.append(
                             [i + self.position[0], j + self.position[1]])
             coordonnees = coords
+
 #			print("Rotation testée: %s" % coordonnees)
         for cx, cy in coordonnees:
             if not 0 <= x + cx < max_x:
